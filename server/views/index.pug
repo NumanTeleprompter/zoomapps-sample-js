@@ -1,13 +1,26 @@
 extends layout
 
 block content
-    h1=title
     if isZoom
-        p Welcome to your Zoom App
+        if context && context !== 'undefined'
+        
+         <div class="prompter-container">
+         p=context
+         <div class="button-container">
+         a(href=`/test` class="button-nav") Reset
+         a(href=`/test` class="button-nav") Previous
+         a(href=`/test` class="button-nav") Play
+         a(href=`/test` class="button-nav") Next
+         <input type="range" min="1" max="100" value="50" class="scroll_speed" id="myRange">
+         </div>
+         
+         </div>
+      
+        else if context && context === 'undefined'
+            p No params found so display NEW SCRIPT button.
     else
         p You're viewing your Zoom App through the browser.&nbsp;
-            a(href=`/install`) Click Here
-            | &nbsp;to install your app in Zoom.
+        a(href=`/install${params}`) Click Here&nbsp;to install your app in Zoom or to open the script in Zoom.
 
 append scripts
     if isZoom

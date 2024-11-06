@@ -21,13 +21,11 @@ router.get('/', async (req, res, next) => {
 
         const header = req.header(contextHeader);
         const context = header && getAppContext(header);
-        let contextScriptId;
 
         if (!context) {
             return res.render('index', {
                 isZoom: false,
                 title: `Hello Browser`,
-                params: `?id=${req.query.id}`,
             });
         }
 
@@ -38,17 +36,11 @@ router.get('/', async (req, res, next) => {
                 .json({ error: 'Invalid or expired context' });
         }
 
-        if (context.act) {
-            contextScriptId = JSON.parse(context.act);
-        } else {
-            contextScriptId = 'undefined';
-        }
-
-        return res.render('index', {
+        return res.render('test', {
             isZoom: true,
-            title: `CloudPrompter Zoom`,
+            title: `CloudPrompter Test`,
             params: req.query.id,
-            context: String(contextScriptId.script_id) ?? 'undefined',
+            context: context.act,
         });
     } catch (e) {
         next(handleError(e));
@@ -63,7 +55,6 @@ router.get('/install', session, async (req, res) => {
     const { url, state, verifier } = getInstallURL();
     req.session.state = state;
     req.session.verifier = verifier;
-    req.session.script_id = req.query.id;
     res.redirect(url.href);
 });
 

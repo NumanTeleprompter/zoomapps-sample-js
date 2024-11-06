@@ -11,7 +11,7 @@ import { fileURLToPath, URL } from 'url';
 import { start } from './server/server.js';
 import indexRoutes from './server/routes/index.js';
 import authRoutes from './server/routes/auth.js';
-
+import testRoutes from './server/routes/test.js';
 import { appName, port, redirectUri } from './config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -91,7 +91,7 @@ app.use(express.static(staticDir));
 /* Routing */
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
-
+app.use('/test', testRoutes);
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
     const status = err.status || 500;

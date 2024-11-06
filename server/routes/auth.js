@@ -40,14 +40,15 @@ router.get('/', session, validateQuery, async (req, res, next) => {
 
         const code = req.query.code;
         const verifier = req.session.verifier;
-
+        const scriptId = req.session.script_id;
+        console.log(scriptId);
         req.session.verifier = null;
 
         // get Access Token from Zoom
         const { access_token: accessToken } = await getToken(code, verifier);
 
         // fetch deeplink from Zoom API
-        const deeplink = await getDeeplink(accessToken);
+        const deeplink = await getDeeplink(accessToken, scriptId);
 
         // redirect the user to the Zoom Client
         res.redirect(deeplink);

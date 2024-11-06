@@ -143,13 +143,14 @@ export function getZoomUser(uid, token) {
  * @param {string} token - Zoom App Access Token
  * @return {Promise}
  */
-export function getDeeplink(token) {
+export function getDeeplink(token, scriptId) {
     return apiRequest('POST', '/zoomapp/deeplink', token, {
         action: JSON.stringify({
             url: '/',
             role_name: 'Owner',
             verified: 1,
             role_id: 0,
+            script_id: scriptId,
         }),
     }).then((data) => Promise.resolve(data.deeplink));
 }
